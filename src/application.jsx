@@ -15,9 +15,6 @@ import AdminContainer from './components/admin/container';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 
-import 'react-toolbox/lib/commons.scss';
-import './styles/base.scss';
-
 injectTapEventPlugin();
 
 const node = document.getElementById('root');
