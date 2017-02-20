@@ -7,21 +7,12 @@ module.exports = {
   devtool: 'inline-source-map',
   context: base.context,
   module: {
-    loaders: [
-      {
-        test: /\.js(x|)?$/,
-        loader: 'babel-loader?plugins[]=transform-object-rest-spread',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(svg|png)$/,
-        loader: 'file-loader'
-      },
+    rules: base.module.rules.concat([
       {
         test: /\.json$/,
         loader: 'json-loader'
       }
-    ]
+    ])
   },
   resolve: base.resolve,
   plugins: [

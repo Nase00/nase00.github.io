@@ -1,12 +1,15 @@
 /* globals __dirname */
+const webpack = require('webpack');
 const path = require('path');
 const merge = require('lodash/merge');
 const filter = require('lodash/filter');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const baseContext = path.join(__dirname, '../src');
+const testContext = path.join(__dirname, '../tests');
+
 const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
 
 const aliasSafety = (result, developmentModule) => {
   result[developmentModule] = isProd ? null : developmentModule;
@@ -29,12 +32,9 @@ const developmentModules = filter([
   'redux-devtools-dispatch'
 ].reduce(aliasSafety, {}), (e) => e);
 
-const CSS_IMPORT = `css?sourceMap&modules&importLoaders=1
-  &localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass`;
-
 module.exports = {
   context: baseContext,
-  entry: '../src/application.jsx',
+  entry: '../src/index.jsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js',
@@ -42,33 +42,46 @@ module.exports = {
     libraryTarget: 'umd'
   },
   resolve: {
-    root: baseContext,
+    modules: [baseContext, 'node_modules'],
     alias: merge({
+      constants: path.resolve(__dirname, '../src/constants'),
       styles: path.resolve(__dirname, '../src/styles'),
       utils: path.resolve(__dirname, '../src/utils')
     }, developmentModules),
-    extensions: ['', '.js', '.jsx', '.scss', '.css'],
-    modulesDirectories: [
-      'node_modules',
-      path.resolve(__dirname, './node_modules')
-    ]
+    extensions: ['.js', '.jsx', '.scss', '.css']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js(x|)?$/,
-        loader: 'babel-loader?plugins[]=transform-object-rest-spread',
-        includes: [baseContext],
+        use: {
+          loader: 'babel-loader'
+        },
+        include: [baseContext].concat(isTest ? testContext : []),
         exclude: /node_modules/
       },
       {
         test: /(\.scss|\.css)$/,
-        loader: ExtractTextPlugin.extract('style', CSS_IMPORT)
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1
+            }
+          },
+          'sass-loader',
+          'postcss-loader'
+        ]
       },
       {
         test: /\.(svg|png)$/,
-        loader: 'file-loader',
-        includes: [baseContext],
+        use: {
+          loader: 'file-loader',
+        },
+        include: [baseContext],
         exclude: /node_modules/
       }
     ]
@@ -79,6 +92,9 @@ module.exports = {
     includePaths: [path.resolve(__dirname, '../src')]
   },
   plugins: [
-    new ExtractTextPlugin('react-toolbox.css', { allChunks: true })
+    new webpack.NamedModulesPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
   ],
 };

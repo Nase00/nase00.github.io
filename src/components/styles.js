@@ -2,6 +2,7 @@ import { DARK_GREY, WHITE } from 'styles/colors';
 
 const styles = {
   '.body-container': {
+    overflow: 'hidden',
     position: 'absolute',
     height: '100%',
     width: '100%',

@@ -1,9 +1,7 @@
 /* globals document */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Router, IndexRoute, Route } from 'react-router';
 import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import history from './config/history';
 import store from './store';
@@ -15,14 +13,13 @@ import AdminContainer from './components/admin/container';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 
-import 'react-toolbox/lib/commons.scss';
-import './styles/base.scss';
+System.import('react-tap-event-plugin').then((injectTapEventPlugin) => {
+  try { // Unideal workaround to prevent invariant warnings from hot-reloading plugin
+    injectTapEventPlugin();
+  } catch (e) {} // eslint-disable-line
+});
 
-injectTapEventPlugin();
-
-const node = document.getElementById('root');
-
-const Application = (
+const Application = () => (
   <Provider store={store}>
     <Router history={history}>
       <Route path='/' component={Body}>
@@ -33,4 +30,4 @@ const Application = (
   </Provider>
 );
 
-ReactDOM.render(Application, node);
+export default Application;
