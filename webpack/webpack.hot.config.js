@@ -1,12 +1,13 @@
 const webpack = require('webpack');
+const path = require('path');
 const base = require('./webpack.config');
 
 module.exports = {
   context: base.context,
   entry: {
     app: [
-      'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
       'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/only-dev-server',
       base.entry
     ]
@@ -16,9 +17,16 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ].concat(base.plugins),
   module: base.module,
-  devtool: 'eval-source-map',
-  externals: base.externals
+  devtool: 'inline-source-map',
+  externals: base.externals,
+  devServer: {
+    hot: true,
+    contentBase: path.join(__dirname, '../dist'),
+    publicPath: '/',
+    headers: { 'Access-Control-Allow-Origin': '*' }
+  }
 };

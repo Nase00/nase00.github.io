@@ -34,7 +34,7 @@ const developmentModules = filter([
 
 module.exports = {
   context: baseContext,
-  entry: '../src/application.jsx',
+  entry: '../src/index.jsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js',
@@ -54,7 +54,7 @@ module.exports = {
       {
         test: /\.js(x|)?$/,
         use: {
-          loader: 'babel-loader?plugins[]=transform-object-rest-spread'
+          loader: 'babel-loader'
         },
         include: [baseContext].concat(isTest ? testContext : []),
         exclude: /node_modules/

@@ -1,6 +1,5 @@
 /* globals document */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Router, IndexRoute, Route } from 'react-router';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -17,9 +16,7 @@ import 'velocity-animate/velocity.ui';
 
 injectTapEventPlugin();
 
-const node = document.getElementById('root');
-
-const Application = (
+const Application = () => (
   <Provider store={store}>
     <Router history={history}>
       <Route path='/' component={Body}>
@@ -30,4 +27,4 @@ const Application = (
   </Provider>
 );
 
-ReactDOM.render(Application, node);
+export default Application;
