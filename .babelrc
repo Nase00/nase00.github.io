@@ -1,8 +1,8 @@
 {
-  "presets": [["es2015", { "modules": false }], "stage-0", "stage-3", "react"],
+  "presets": [["es2015", { "modules": false }], "react"],
   "plugins": [
     "transform-object-rest-spread",
-    "syntax-async-functions",
+    "transform-async-to-generator",
     "transform-regenerator",
     "react-hot-loader/babel"
   ],

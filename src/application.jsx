@@ -2,7 +2,6 @@
 import React from 'react';
 import { Router, IndexRoute, Route } from 'react-router';
 import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import history from './config/history';
 import store from './store';
@@ -14,7 +13,13 @@ import AdminContainer from './components/admin/container';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 
-injectTapEventPlugin();
+System.import('react-tap-event-plugin').then((injectTapEventPlugin) => {
+  try {
+    injectTapEventPlugin();
+  } catch (e) {
+
+  }
+});
 
 const Application = () => (
   <Provider store={store}>

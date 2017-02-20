@@ -1,4 +1,4 @@
-import { WHITE, secondary, DARK_GREY, LIGHT_GREY } from 'styles/colors';
+import { WHITE, secondary, LIGHT_GREY } from 'styles/colors';
 
 const styles = {
   '.switch-active > span': {
@@ -15,8 +15,11 @@ const styles = {
   },
 
   'section.operations': {
+    overflow: 'hidden',
+    position: 'absolute',
     margin: 'auto',
     minHeight: '100%',
+    height: '1000px',
     width: '100%',
     color: WHITE,
     transition: 'background-color .75s ease'
@@ -38,7 +41,7 @@ const styles = {
   },
   '.switches': {
     margin: 'auto',
-    width: '200px',
+    width: '300px',
     textAlign: 'left'
   }
 };
