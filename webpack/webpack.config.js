@@ -3,11 +3,13 @@ const webpack = require('webpack');
 const path = require('path');
 const merge = require('lodash/merge');
 const filter = require('lodash/filter');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const baseContext = path.join(__dirname, '../src');
+const testContext = path.join(__dirname, '../tests');
+
 const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
 
 const aliasSafety = (result, developmentModule) => {
   result[developmentModule] = isProd ? null : developmentModule;
@@ -54,7 +56,7 @@ module.exports = {
         use: {
           loader: 'babel-loader?plugins[]=transform-object-rest-spread'
         },
-        include: [baseContext],
+        include: [baseContext].concat(isTest ? testContext : []),
         exclude: /node_modules/
       },
       {
