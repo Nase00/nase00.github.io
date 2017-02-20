@@ -26,7 +26,6 @@ module.exports = {
   devServer: {
     hot: true,
     contentBase: path.join(__dirname, '../dist'),
-    publicPath: '/',
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    publicPath: '/'
   }
 };
