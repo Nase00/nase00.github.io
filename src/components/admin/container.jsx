@@ -22,8 +22,10 @@ AdminContainer.propTypes = {
 
 const mapStateToProps = ({ adminReducer }) => ({
   documentTitle: adminReducer.documentTitle,
+  tabsIndex: adminReducer.tabsIndex,
   useHTSpeakers: adminReducer.useHTSpeakers,
   deadboltInputDisabled: adminReducer.deadboltInputDisabled,
+  deskHeightInputDisabled: adminReducer.deskHeightInputDisabled,
   passcode: adminReducer.passcode,
   proxyResponseStatus: adminReducer.proxyResponseStatus
 });

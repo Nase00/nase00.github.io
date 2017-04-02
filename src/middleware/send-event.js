@@ -1,5 +1,5 @@
 import { EMIT_PROXY_RESPONSE, EMIT_PROXY_RESPONSE_RESET } from '../ducks/admin';
-import { PROXY_URL, PROXY_RESPONSE_RESET_TIMOUT } from '../constants';
+import { PROXY_RESPONSE_RESET_TIMOUT } from '../constants';
 
 const sendEvent = (next, { passcode, proxy, events }) => fetch(proxy, {
   method: 'post',

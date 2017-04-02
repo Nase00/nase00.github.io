@@ -1,6 +1,16 @@
-import { WHITE, secondary, LIGHT_GREY } from 'styles/colors';
+import { WHITE, PRIMARY_COLOR, LIGHT_GREY } from 'styles/colors';
 
 const styles = {
+  '.tabs': {
+    margin: '0 auto',
+    width: '200px'
+  },
+
+  '.tab': {
+    color: WHITE,
+    width: '100px'
+  },
+
   '.switch-active > span': {
     color: WHITE
   },
@@ -17,6 +27,7 @@ const styles = {
   'section.operations': {
     overflow: 'hidden',
     position: 'absolute',
+    left: '0',
     margin: 'auto',
     minHeight: '100%',
     height: '1000px',
@@ -29,8 +40,8 @@ const styles = {
     display: 'block',
     width: '100%',
     color: WHITE,
-    backgroundColor: `${secondary} !important`,
-    borderRadius: 0
+    backgroundColor: `${PRIMARY_COLOR} !important`,
+    borderRadius: '0'
   },
   '.status-indicator': {
     fontSize: '24px',

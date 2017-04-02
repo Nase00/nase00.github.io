@@ -1,17 +1,17 @@
-import { LIGHT_GREY, WHITE, secondary } from 'styles/colors';
+import { WHITE, PRIMARY_COLOR, SECONDARY_COLOR } from 'styles/colors';
 
 const styles = {
   '.home-card': {
-    margin: 'auto',
+    margin: '18% auto 0',
     maxWidth: '400px',
     color: WHITE,
-    backgroundColor: LIGHT_GREY
+    backgroundColor: SECONDARY_COLOR
   },
   '.portfolio-link': {
     display: 'block',
     width: '100%',
     color: WHITE,
-    backgroundColor: secondary,
+    backgroundColor: `${PRIMARY_COLOR} !important`,
     borderRadius: 0
   }
 };
