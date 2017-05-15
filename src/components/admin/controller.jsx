@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Tab, Tabs, Layout, Input } from 'react-toolbox';
 import { Style } from 'radium';
 import { get } from 'lodash';
@@ -9,7 +10,7 @@ import DeskOperations from './desk-operations';
 import styles, { statusColors } from './styles';
 import theme from './theme.scss';
 
-class AdminController extends Component {
+class AdminController extends PureComponent {
   constructor(props) {
     super(props);
 
