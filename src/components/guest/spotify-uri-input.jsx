@@ -8,6 +8,11 @@ import theme from './theme.scss';
 
 const SpotifyURIInput = ({ value, actions }) => {
   const isValid = value.length === 0 || !!value.match(SPOTIFY_URI_FORMAT);
+  const handleInput = (input) => {
+    const parsedInput = input.replace(/https:\/\/open.spotify.com\/track\//, 'spotify:track:');
+
+    actions.emitSpotifyURIUpdate(parsedInput);
+  };
 
   return (
     <Input
@@ -18,7 +23,7 @@ const SpotifyURIInput = ({ value, actions }) => {
       label='Paste Spotify URI'
       hint='Must match valid Spotify URI format'
       error={isValid ? '' : 'Invalid Spotify URI'}
-      onChange={actions.emitSpotifyURIUpdate}
+      onChange={handleInput}
       required/>
   );
 };
