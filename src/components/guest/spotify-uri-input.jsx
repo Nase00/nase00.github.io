@@ -15,7 +15,7 @@ const SpotifyURIInput = ({ value, actions }) => {
       className='operations-input'
       type='text'
       value={value}
-      label='Enter Spotify URI'
+      label='Paste Spotify URI'
       hint='Must match valid Spotify URI format'
       error={isValid ? '' : 'Invalid Spotify URI'}
       onChange={actions.emitSpotifyURIUpdate}
