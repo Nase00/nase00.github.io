@@ -5,7 +5,6 @@ import { createDevTools } from 'redux-devtools';
 import DockMonitor from 'redux-devtools-dock-monitor';
 import LogMonitor from 'redux-devtools-log-monitor';
 import SliderMonitor from 'redux-slider-monitor';
-import ChartMonitor from 'redux-devtools-chart-monitor';
 import DiffMonitor from 'redux-devtools-diff-monitor';
 import Inspector from 'redux-devtools-inspector';
 import Dispatcher from 'redux-devtools-dispatch';
@@ -26,7 +25,6 @@ const DevTools = createDevTools(
       <SliderMonitor keyboardEnabled/>
       <Dispatcher keyboardEnabled actionCreators={actions}/>
       <LogMonitor theme='tomorrow'/>
-      <ChartMonitor keyboardEnabled/>
       <DiffMonitor keyboardEnabled/>
   </DockMonitor>
 );

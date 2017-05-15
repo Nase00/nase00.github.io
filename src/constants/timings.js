@@ -1,1 +1,0 @@
-export const PROXY_RESPONSE_RESET_TIMOUT = 500;

@@ -1,0 +1,16 @@
+@import "react-toolbox/lib/button/theme";
+@import "react-toolbox/lib/colors";
+
+.input {
+  .bar {
+    border: 1px solid #2B9EB3;
+  }
+
+  .hint {
+    color: #808080;
+  }
+
+  .inputElement {
+    padding: 10px 0;
+  }
+}

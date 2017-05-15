@@ -9,6 +9,7 @@ import store from './store';
 import Body from './components/body';
 import Home from './components/home/static';
 import AdminContainer from './components/admin/container';
+import GuestContainer from './components/guest/container';
 
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
@@ -25,6 +26,7 @@ const Application = () => (
       <Route path='/' component={Body}>
         <IndexRoute component={Home}/>
         <Route path='admin' component={AdminContainer}/>
+        <Route path='guest' component={GuestContainer}/>
       </Route>
     </Router>
   </Provider>
