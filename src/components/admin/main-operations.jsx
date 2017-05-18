@@ -34,7 +34,7 @@ const MainOperations = (props) => {
   ]);
 
   const triggerLRLightEvents = triggerEvents([
-    { type: 'EMIT_SEND_HUE_COMMAND', id: 2, func: 'toggle' }
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 3, func: 'toggle' }
   ]);
 
   return (
