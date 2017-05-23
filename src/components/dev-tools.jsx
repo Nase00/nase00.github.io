@@ -3,6 +3,7 @@ import React from 'react';
 import { createDevTools } from 'redux-devtools';
 
 import DockMonitor from 'redux-devtools-dock-monitor';
+import UploadDownloadMonitor from 'redux-devtools-upload-download-monitor';
 import LogMonitor from 'redux-devtools-log-monitor';
 import SliderMonitor from 'redux-slider-monitor';
 import DiffMonitor from 'redux-devtools-diff-monitor';
@@ -18,14 +19,19 @@ const actions = {
 const DevTools = createDevTools(
   <DockMonitor
     defaultIsVisible={false}
-    toggleVisibilityKey='shift-q'
-    changePositionKey='shift-w'
-    changeMonitorKey='shift-e'>
-      <Inspector theme='tomorrow' supportImmutable/>
+    fluid={false}
+    defaultSize={170}
+    defaultPosition='bottom'
+    toggleVisibilityKey='ctrl-q'
+    changePositionKey='ctrl-w'
+    changeMonitorKey='ctrl-e'>
+    <UploadDownloadMonitor>
       <SliderMonitor keyboardEnabled/>
-      <Dispatcher keyboardEnabled actionCreators={actions}/>
-      <LogMonitor theme='tomorrow'/>
-      <DiffMonitor keyboardEnabled/>
+    </UploadDownloadMonitor>
+    <LogMonitor theme='tomorrow'/>
+    <DiffMonitor keyboardEnabled/>
+    <Inspector theme='tomorrow' supportImmutable/>
+    <Dispatcher keyboardEnabled actionCreators={actions}/>
   </DockMonitor>
 );
 

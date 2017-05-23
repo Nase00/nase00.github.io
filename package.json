@@ -29,8 +29,8 @@
   ],
   "license": "none",
   "engines": {
-    "node": "^7.5.0",
-    "npm": "^4.1.2"
+    "node": "^7.10.0",
+    "npm": "^4.6.1"
   },
   "private": true,
   "dependencies": {
@@ -82,7 +82,7 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.0.1",
     "expect": "^1.14.0",
-    "extract-text-webpack-plugin": "beta",
+    "extract-text-webpack-plugin": "^2.1.0",
     "imports-loader": "^0.6.5",
     "istanbul": "^1.0.0-alpha.2",
     "istanbul-instrumenter-loader": "^0.2.0",
@@ -116,9 +116,10 @@
     "redux-devtools-diff-monitor": "^5.0.5",
     "redux-devtools-dispatch": "^2.2.0",
     "redux-devtools-dock-monitor": "^1.1.0",
-    "redux-devtools-inspector": "^0.9.4",
+    "redux-devtools-inspector": "^0.11.3",
     "redux-devtools-log-monitor": "^1.0.5",
-    "redux-slider-monitor": "^1.0.2",
+    "redux-devtools-upload-download-monitor": "^1.0.2",
+    "redux-slider-monitor": "^2.0.0-0",
     "reporter": "^0.1.0",
     "sass-loader": "^6.0.1",
     "sinon": "^2.0.0-pre",
