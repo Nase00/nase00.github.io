@@ -17,27 +17,31 @@ const MainOperations = props => {
     conditions: { locked: false, ajar: true }
   };
 
-  const resetDelay = 60000;
+  const beginDelay = 10000;
+  const resetDelay = 110000;
 
   const triggerGateEvents = triggerEvents([
-    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
-    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'buzz', body: { code: passcode } },
+    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen', delay: beginDelay },
+    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'buzz', body: { code: passcode }, delay: beginDelay },
     {
       type: 'EMIT_SEND_SPOTIFY_COMMAND',
       name: 'playerPlay',
       uris: [spotifyURI],
+      delay: beginDelay,
       ...spotifyParams
     },
     {
       type: 'EMIT_SEND_SPOTIFY_COMMAND',
       name: 'playerShuffle',
       state: true,
+      delay: beginDelay,
       ...spotifyParams
     },
     {
       type: 'EMIT_SEND_SPOTIFY_COMMAND',
       name: 'playerVolume',
       volumePercent: 100,
+      delay: beginDelay,
       ...spotifyParams
     },
     {
@@ -45,7 +49,8 @@ const MainOperations = props => {
       func: 'rgb',
       arg: Object.values(rgb),
       id: 3,
-      conditions: { locked: false, ajar: true }
+      conditions: { locked: false, ajar: true },
+      delay: beginDelay
     },
     {
       type: 'EMIT_SEND_SPOTIFY_COMMAND',
@@ -60,8 +65,8 @@ const MainOperations = props => {
       volumePercent: 70,
       delay: resetDelay
     },
-    { type: 'EMIT_SEND_HUE_COMMAND', func: 'white', arg: 255, id: 3, delay: resetDelay - 500 },
-    { type: 'EMIT_SEND_HUE_COMMAND', func: 'brightness', arg: 70, id: 3, delay: resetDelay - 250 }
+    { type: 'EMIT_SEND_HUE_COMMAND', func: 'white', arg: 255, id: 3, delay: resetDelay - 50 },
+    { type: 'EMIT_SEND_HUE_COMMAND', func: 'brightness', arg: 70, id: 3, delay: resetDelay - 25 }
   ]);
 
   const helpLink = (
