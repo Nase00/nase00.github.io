@@ -7,7 +7,6 @@ import UploadDownloadMonitor from 'redux-devtools-upload-download-monitor';
 import LogMonitor from 'redux-devtools-log-monitor';
 import SliderMonitor from 'redux-slider-monitor';
 import DiffMonitor from 'redux-devtools-diff-monitor';
-import Inspector from 'redux-devtools-inspector';
 import Dispatcher from 'redux-devtools-dispatch';
 
 import * as HomeActions from '../ducks/home';
@@ -30,7 +29,6 @@ const DevTools = createDevTools(
     </UploadDownloadMonitor>
     <LogMonitor theme='tomorrow'/>
     <DiffMonitor keyboardEnabled/>
-    <Inspector theme='tomorrow' supportImmutable/>
     <Dispatcher keyboardEnabled actionCreators={actions}/>
   </DockMonitor>
 );

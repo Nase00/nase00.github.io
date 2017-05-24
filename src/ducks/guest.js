@@ -4,11 +4,12 @@ import { handleAction } from '../utils';
 
 export const EMIT_BUZZ_CODE_UPDATE = 'EMIT_BUZZ_CODE_UPDATE';
 export const EMIT_SPOTIFY_URI_UPDATE = 'EMIT_SPOTIFY_URI_UPDATE';
+export const EMIT_RGB_UPDATE = 'EMIT_RGB_UPDATE';
 export const EMIT_SEND_EVENT = 'EMIT_SEND_EVENT';
 export const EMIT_PROXY_RESPONSE = 'EMIT_PROXY_RESPONSE';
 export const EMIT_PROXY_RESPONSE_RESET = 'EMIT_PROXY_RESPONSE_RESET';
 
-export const emitPasscodeUpdate = (passcode) => ({
+export const emitPasscodeUpdate = passcode => ({
   type: EMIT_BUZZ_CODE_UPDATE,
   passcode
 });
@@ -20,14 +21,20 @@ export const emitSendEvent = (passcode, proxy, events) => ({
   events
 });
 
-export const emitSpotifyURIUpdate = (spotifyURI) => ({
+export const emitSpotifyURIUpdate = spotifyURI => ({
   type: EMIT_SPOTIFY_URI_UPDATE,
   spotifyURI
+});
+
+export const emitRGBUpdate = color => ({
+  type: EMIT_RGB_UPDATE,
+  color
 });
 
 const initialState = {
   documentTitle: 'Guest',
   spotifyURI: '',
+  rgb: { r: 255, g: 0, b: 255 },
   passcode: cookies.get('passcode') || ''
 };
 
@@ -51,6 +58,11 @@ const homeReducer = (state = initialState, action) => {
     [EMIT_SPOTIFY_URI_UPDATE]: () => ({
       ...state,
       spotifyURI: action.spotifyURI
+    }),
+
+    [EMIT_RGB_UPDATE]: () => ({
+      ...state,
+      rgb: action.color.rgb
     })
   };
 

@@ -6,6 +6,12 @@ const styles = {
     fontSize: '16px'
   },
 
+  '.operations-header': {
+    padding: '20px',
+    fontSize: '16px',
+    textAlign: 'left'
+  },
+
   a: {
     color: PRIMARY_COLOR
   },
@@ -49,7 +55,11 @@ const styles = {
     margin: 'auto',
     width: '300px',
     textAlign: 'left'
-  }
+  },
+
+  coloredText: color => ({
+    textShadow: `-1px 0 ${color}, 0 1px ${color}, 1px 0 ${color}, 0 -1px ${color}`
+  })
 };
 
 export const statusColors = {

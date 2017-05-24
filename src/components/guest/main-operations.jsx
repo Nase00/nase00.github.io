@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Input, Button } from 'react-toolbox';
+import { HuePicker } from 'react-color';
 
+import { genRGB } from '../../utils';
 import SpotifyURIInput from './spotify-uri-input';
+import styles from './styles';
 import theme from './theme.scss';
 
-const MainOperations = (props) => {
-  const {
-    actions,
-    passcode,
-    spotifyURI,
-    triggerEvents
-  } = props;
+const MainOperations = props => {
+  const { actions, passcode, spotifyURI, rgb, triggerEvents } = props;
+  const color = genRGB(...Object.values(rgb));
+
+  const spotifyParams = {
+    device_id: '355beabb5645106941fcdff91fb48e2ad827050e',
+    conditions: { locked: false, ajar: true }
+  };
+
+  const resetDelay = 60000;
 
   const triggerGateEvents = triggerEvents([
     { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
@@ -20,45 +26,86 @@ const MainOperations = (props) => {
       type: 'EMIT_SEND_SPOTIFY_COMMAND',
       name: 'playerPlay',
       uris: [spotifyURI],
-      device_id: '355beabb5645106941fcdff91fb48e2ad827050e',
+      ...spotifyParams
+    },
+    {
+      type: 'EMIT_SEND_SPOTIFY_COMMAND',
+      name: 'playerShuffle',
+      state: true,
+      ...spotifyParams
+    },
+    {
+      type: 'EMIT_SEND_SPOTIFY_COMMAND',
+      name: 'playerVolume',
+      volumePercent: 100,
+      ...spotifyParams
+    },
+    {
+      type: 'EMIT_SEND_HUE_COMMAND',
+      func: 'rgb',
+      arg: Object.values(rgb),
+      id: 3,
       conditions: { locked: false, ajar: true }
     },
     {
       type: 'EMIT_SEND_SPOTIFY_COMMAND',
       name: 'playerPlay',
       context_uri: 'spotify:user:nasezero:playlist:4KSxM9RXXLrDJxgb9zxAlo',
-      conditions: { locked: false, ajar: true },
-      delay: 60000
-    }
+      delay: resetDelay,
+      ...spotifyParams
+    },
+    {
+      type: 'EMIT_SEND_SPOTIFY_COMMAND',
+      name: 'playerVolume',
+      volumePercent: 70,
+      delay: resetDelay
+    },
+    { type: 'EMIT_SEND_HUE_COMMAND', func: 'white', arg: 255, id: 3, delay: resetDelay - 500 },
+    { type: 'EMIT_SEND_HUE_COMMAND', func: 'brightness', arg: 70, id: 3, delay: resetDelay - 250 }
   ]);
 
   const helpLink = (
     <a
       target='_blank'
       href='https://support.spotify.com/us/using_spotify/share_music/sharing-music/'>
-        here
+      here
     </a>
   );
 
   return (
     <section className='operations'>
+      <p className='operations-header'>
+        Use this app to get through the gate. The lights will change to
+        your <span style={styles.coloredText(color)}>selected color </span>
+        and your song will play once you enter the apartment.
+      </p>
+      <HuePicker height='30px' width='100%' color={rgb} onChange={actions.emitRGBUpdate}/>
+      <br/>
       <table className='operations-table'>
-        <td><tr><Avatar icon='queue_music'/></tr></td>
-        <td><tr><SpotifyURIInput value={spotifyURI} {...props}/></tr></td>
+        <tbody>
+          <tr>
+            <td><Avatar icon='queue_music'/></td>
+            <td><SpotifyURIInput value={spotifyURI} {...props}/></td>
+          </tr>
+        </tbody>
       </table>
       <table className='operations-table'>
-        <td><tr><Avatar icon='fingerprint'/></tr></td>
-        <td><tr>
-        <Input
-          theme={theme}
-          className='operations-input'
-          type='text'
-          value={passcode}
-          label='Enter Passcode'
-          hint='Only cool people have this'
-          onChange={actions.emitPasscodeUpdate}
-          required/>
-        </tr></td>
+        <tbody>
+          <tr>
+            <td><Avatar icon='fingerprint'/></td>
+            <td>
+              <Input
+                theme={theme}
+                className='operations-input'
+                type='text'
+                value={passcode}
+                label='Enter Passcode'
+                hint='Only cool people have this'
+                onChange={actions.emitPasscodeUpdate}
+                required/>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <Button className='submit-command' onClick={triggerGateEvents} raised>
         Open Gate
@@ -72,7 +119,13 @@ const MainOperations = (props) => {
 
 MainOperations.propTypes = {
   actions: PropTypes.shape({
-    emitPasscodeUpdate: PropTypes.func.isRequired
+    emitPasscodeUpdate: PropTypes.func.isRequired,
+    emitRGBUpdate: PropTypes.func.isRequired
+  }),
+  rgb: PropTypes.shape({
+    r: PropTypes.number.isRequired,
+    g: PropTypes.number.isRequired,
+    b: PropTypes.number.isRequired
   }),
   passcode: PropTypes.string.isRequired,
   spotifyURI: PropTypes.string.isRequired,
