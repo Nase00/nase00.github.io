@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tab, Tabs, Layout, Input } from 'react-toolbox';
 import { Style } from 'radium';
+import queryString from 'query-string';
 import { get } from 'lodash';
 
 import MainOperations from './main-operations';
@@ -37,40 +38,42 @@ class AdminController extends PureComponent {
 
   render() {
     const { location, tabsIndex, proxyResponseStatus, actions } = this.props;
-    const passcode = get(location, 'query.passcode', this.props.passcode);
-    const proxy = get(location, 'query.proxy');
-    const triggerEvents = (events) => () => actions.emitSendEvent(passcode, proxy, events);
+    const { passcode, proxy } = queryString.parse(location.search);
+    const triggerEvents = events => () => actions.emitSendEvent(passcode, proxy, events);
+
 
     return (
       <Layout className='admin-container' style={statusColors[proxyResponseStatus]}>
         <Style rules={styles}/>
-        {location.query.passcode ? null : <Input
-          className='operations-passcode-input'
-          type='text'
-          value={passcode}
-          label='Required Field'
-          hint='Enter code'
-          onChange={actions.emitPasscodeUpdate}
-          required/>}
+        {passcode
+          ? null
+          : <Input
+            className='operations-passcode-input'
+            type='text'
+            value={passcode}
+            label='Required Field'
+            hint='Enter code'
+            onChange={actions.emitPasscodeUpdate}
+            required/>}
         <Tabs
           index={tabsIndex}
           onChange={actions.emitHandleTabChange}
           className='tabs'
           theme={theme}>
-            <Tab label='Main' className='tab'>
-              <MainOperations
-                triggerEvents={triggerEvents}
-                toggleDeadboltInput={this.toggleDeadboltInput}
-                {...this.props}
-                passcode={passcode}/>
-            </Tab>
-            <Tab label='Desk' className='tab'>
-              <DeskOperations
-                triggerEvents={triggerEvents}
-                toggleHTSpeakers={this.toggleHTSpeakers}
-                toggleDeskHeightInput={this.toggleDeskHeightInput}
-                {...this.props}/>
-            </Tab>
+          <Tab label='Main' className='tab'>
+            <MainOperations
+              triggerEvents={triggerEvents}
+              toggleDeadboltInput={this.toggleDeadboltInput}
+              {...this.props}
+              passcode={passcode}/>
+          </Tab>
+          <Tab label='Desk' className='tab'>
+            <DeskOperations
+              triggerEvents={triggerEvents}
+              toggleHTSpeakers={this.toggleHTSpeakers}
+              toggleDeskHeightInput={this.toggleDeskHeightInput}
+              {...this.props}/>
+          </Tab>
         </Tabs>
       </Layout>
     );

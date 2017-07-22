@@ -5,7 +5,7 @@ import { StyleRoot, Style } from 'radium';
 import { base } from '../config/composition';
 import styles from './styles';
 
-const Body = (props) => {
+const Body = props => {
   const isProd = process.env.NODE_ENV === 'production';
   const DevTools = isProd ? null : require('./dev-tools').default;
 

@@ -1,6 +1,7 @@
 /* globals document */
 import React from 'react';
-import { Router, IndexRoute, Route } from 'react-router';
+import { Route } from 'react-router';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import history from './config/history';
@@ -14,21 +15,22 @@ import GuestContainer from './components/guest/container';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 
-System.import('react-tap-event-plugin').then((injectTapEventPlugin) => {
-  try { // Unideal workaround to prevent invariant warnings from hot-reloading plugin
+System.import('react-tap-event-plugin').then(injectTapEventPlugin => {
+  try {
+    // Unideal workaround to prevent invariant warnings from hot-reloading plugin
     injectTapEventPlugin();
   } catch (e) {} // eslint-disable-line
 });
 
 const Application = () => (
   <Provider store={store}>
-    <Router history={history}>
-      <Route path='/' component={Body}>
-        <IndexRoute component={Home}/>
-        <Route path='admin' component={AdminContainer}/>
-        <Route path='guest' component={GuestContainer}/>
-      </Route>
-    </Router>
+    <HashRouter history={history}>
+      <Body>
+        <Route path='/' exact component={Home}/>
+        <Route path='/admin' exact component={AdminContainer}/>
+        <Route path='/guest' exact component={GuestContainer}/>
+      </Body>
+    </HashRouter>
   </Provider>
 );
 
