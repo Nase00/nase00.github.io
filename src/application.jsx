@@ -15,13 +15,6 @@ import GuestContainer from './components/guest/container';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 
-System.import('react-tap-event-plugin').then(injectTapEventPlugin => {
-  try {
-    // Unideal workaround to prevent invariant warnings from hot-reloading plugin
-    injectTapEventPlugin();
-  } catch (e) {} // eslint-disable-line
-});
-
 const Application = () => (
   <Provider store={store}>
     <HashRouter history={history}>
