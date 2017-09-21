@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Tab, Tabs, Layout, Input } from 'react-toolbox';
+import { Tab, Tabs, Layout } from 'react-toolbox';
 import { Style } from 'radium';
 import queryString from 'query-string';
-import { get } from 'lodash';
 
 import MainOperations from './main-operations';
 import DeskOperations from './desk-operations';
@@ -12,49 +11,27 @@ import styles, { statusColors } from './styles';
 import theme from './theme.scss';
 
 class AdminController extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.toggleHTSpeakers = this.toggleHTSpeakers.bind(this);
-    this.toggleDeadboltInput = this.toggleDeadboltInput.bind(this);
-    this.toggleDeskHeightInput = this.toggleDeskHeightInput.bind(this);
-  }
-
   componentWillMount() {
     document.title = this.props.documentTitle;
   }
 
-  toggleHTSpeakers() {
-    return this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
-  }
+  toggleHTSpeakers = () =>
+    this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
 
-  toggleDeadboltInput() {
-    return this.props.actions.emitToggleDeadboltInput(!this.props.deadboltInputDisabled);
-  }
+  toggleDeadboltInput = () =>
+    this.props.actions.emitToggleDeadboltInput(!this.props.deadboltInputDisabled);
 
-  toggleDeskHeightInput() {
-    return this.props.actions.emitToggleDeskHeightInput(!this.props.deskHeightInputDisabled);
-  }
+  toggleDeskHeightInput = () =>
+    this.props.actions.emitToggleDeskHeightInput(!this.props.deskHeightInputDisabled);
 
   render() {
     const { location, tabsIndex, proxyResponseStatus, actions } = this.props;
     const { passcode, proxy } = queryString.parse(location.search);
     const triggerEvents = events => () => actions.emitSendEvent(passcode, proxy, events);
 
-
     return (
       <Layout className='admin-container' style={statusColors[proxyResponseStatus]}>
         <Style rules={styles}/>
-        {passcode
-          ? null
-          : <Input
-            className='operations-passcode-input'
-            type='text'
-            value={passcode}
-            label='Required Field'
-            hint='Enter code'
-            onChange={actions.emitPasscodeUpdate}
-            required/>}
         <Tabs
           index={tabsIndex}
           onChange={actions.emitHandleTabChange}

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Layout } from 'react-toolbox';
 import { Style } from 'radium';
-import { get } from 'lodash';
+import queryString from 'query-string';
 
 import MainOperations from './main-operations';
 
@@ -15,8 +15,7 @@ class GuestController extends PureComponent {
 
   render() {
     const { location, proxyResponseStatus, actions } = this.props;
-    const passcode = get(location, 'query.passcode', this.props.passcode);
-    const proxy = get(location, 'query.proxy');
+    const { passcode, proxy } = queryString.parse(location.search);
     const triggerEvents = (events) => () => actions.emitSendEvent(passcode, proxy, events);
 
     return (

@@ -1,9 +1,10 @@
 /* globals __dirname */
 const webpack = require('webpack');
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('lodash/merge');
 const filter = require('lodash/filter');
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 
 const baseContext = path.join(__dirname, '../src');
 const testContext = path.join(__dirname, '../tests');
@@ -98,6 +99,10 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
-    })
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: '../src/index.html'
+    }),
   ]
 };
