@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Layout,
-  Panel,
-  Card,
-  CardTitle,
-  Button
-} from 'react-toolbox';
+import { Layout, Panel, Card, CardTitle, Button } from 'react-toolbox';
 import { Style } from 'radium';
 
 import styles from './styles';
@@ -16,12 +10,10 @@ const Home = () => (
       <Style rules={styles}/>
       <Card className='home-card'>
         <CardTitle
-          avatar='https://en.gravatar.com/userimage/84275550/80d76a6b454c7f4388cbcfd38f7f6878.jpg'
-          title='Sean Owiecki'/>
-        <Button
-          className='portfolio-link'
-          label='Email'
-          href='mailto:seanowiecki@gmail.com'/>
+          avatar='https://en.gravatar.com/userimage/58657398/139ee990940a3d8a77ae5999f6502a1b.jpg'
+          title='Sean Owiecki'
+          subtitle='Software Engineer'/>
+        <Button className='portfolio-link' label='Email' href='mailto:seanowiecki@gmail.com'/>
         <Button
           className='portfolio-link'
           label='Github'
@@ -29,13 +21,18 @@ const Home = () => (
           target='_blank'/>
         <Button
           className='portfolio-link'
-          label='LinkedIn'
-          href='https://www.linkedin.com/in/seanowiecki'
+          label='Medium'
+          href='https://medium.com/@NaseZero'
           target='_blank'/>
         <Button
           className='portfolio-link'
-          label='Bitbucket'
-          href='https://bitbucket.org/seanowiecki'
+          label='Hackaday Projects'
+          href='https://hackaday.io/Nase'
+          target='_blank'/>
+        <Button
+          className='portfolio-link'
+          label='LinkedIn'
+          href='https://www.linkedin.com/in/seanowiecki'
           target='_blank'/>
         <Button
           className='portfolio-link'
