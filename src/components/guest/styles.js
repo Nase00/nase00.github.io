@@ -41,7 +41,7 @@ const styles = {
     display: 'block',
     width: '100%',
     color: WHITE,
-    backgroundColor: `${PRIMARY_COLOR} !important`,
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: '0'
   },
   '.status-indicator': {
@@ -49,7 +49,7 @@ const styles = {
     transition: 'color .75s ease-in-out'
   },
   '.disabled': {
-    backgroundColor: `${LIGHT_GREY} !important`
+    backgroundColor: LIGHT_GREY
   },
   '.switches': {
     margin: 'auto',

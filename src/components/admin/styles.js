@@ -1,5 +1,5 @@
 import { WHITE, PRIMARY_COLOR, LIGHT_GREY } from 'styles/colors';
-
+console.log(PRIMARY_COLOR);
 const styles = {
   '.tabs': {
     margin: '0 auto',
@@ -35,21 +35,25 @@ const styles = {
     color: WHITE,
     transition: 'background-color .75s ease'
   },
+
   '.submit-command': {
     margin: '20px 0',
     display: 'block',
     width: '100%',
     color: WHITE,
-    backgroundColor: `${PRIMARY_COLOR} !important`,
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: '0'
   },
+
   '.status-indicator': {
     fontSize: '24px',
     transition: 'color .75s ease-in-out'
   },
+
   '.disabled': {
-    backgroundColor: `${LIGHT_GREY} !important`
+    backgroundColor: LIGHT_GREY
   },
+
   '.switches': {
     margin: 'auto',
     width: '300px',
