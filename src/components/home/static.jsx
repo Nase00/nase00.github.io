@@ -10,7 +10,7 @@ const Home = () => (
       <Style rules={styles}/>
       <Card className='home-card'>
         <CardTitle
-          avatar='https://en.gravatar.com/userimage/58657398/139ee990940a3d8a77ae5999f6502a1b.jpg'
+          avatar='https://en.gravatar.com/userimage/84275550/032c9608349287d6b4b521b4d70cf8dd.jpg?size=200'
           title='Sean Owiecki'
           subtitle='Software Engineer'/>
         <Button className='portfolio-link' label='Email' href='mailto:seanowiecki@gmail.com'/>
