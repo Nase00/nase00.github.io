@@ -4,7 +4,12 @@
 .tabs {
   .navigation {
     .pointer {
-      background-color: #F8333C;
+      background-color: #f8333c;
     }
   }
+}
+
+[data-react-toolbox="avatar"] {
+  width: 150px;
+  height: 150px;
 }

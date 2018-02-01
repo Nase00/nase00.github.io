@@ -6,6 +6,7 @@ import queryString from 'query-string';
 
 import MainOperations from './main-operations';
 import DeskOperations from './desk-operations';
+import MusicOperations from './music-operations';
 
 import styles, { statusColors } from './styles';
 import theme from './theme.scss';
@@ -15,8 +16,7 @@ class AdminController extends PureComponent {
     document.title = this.props.documentTitle;
   }
 
-  toggleHTSpeakers = () =>
-    this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
+  toggleHTSpeakers = () => this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
 
   toggleDeadboltInput = () =>
     this.props.actions.emitToggleDeadboltInput(!this.props.deadboltInputDisabled);
@@ -39,17 +39,22 @@ class AdminController extends PureComponent {
           theme={theme}>
           <Tab label='Main' className='tab'>
             <MainOperations
+              {...this.props}
               triggerEvents={triggerEvents}
               toggleDeadboltInput={this.toggleDeadboltInput}
-              {...this.props}
               passcode={passcode}/>
           </Tab>
           <Tab label='Desk' className='tab'>
             <DeskOperations
+              {...this.props}
               triggerEvents={triggerEvents}
-              toggleHTSpeakers={this.toggleHTSpeakers}
-              toggleDeskHeightInput={this.toggleDeskHeightInput}
-              {...this.props}/>
+              toggleDeskHeightInput={this.toggleDeskHeightInput}/>
+          </Tab>
+          <Tab label='Music' className='tab'>
+            <MusicOperations
+              {...this.props}
+              triggerEvents={triggerEvents}
+              toggleHTSpeakers={this.toggleHTSpeakers}/>
           </Tab>
         </Tabs>
       </Layout>
