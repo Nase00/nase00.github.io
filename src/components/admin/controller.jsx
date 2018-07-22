@@ -25,7 +25,6 @@ class AdminController extends PureComponent {
     const { password = '', id } = queryString.parse(location.search);
 
     scrypt(password, id, SCRYPT_SETTINGS, hashedPassword => {
-      console.log(hashedPassword);
       actions.emithashedPasswordUpdate(hashedPassword);
     });
   }
