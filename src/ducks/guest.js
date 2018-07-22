@@ -9,14 +9,14 @@ export const EMIT_SEND_EVENT = 'EMIT_SEND_EVENT';
 export const EMIT_PROXY_RESPONSE = 'EMIT_PROXY_RESPONSE';
 export const EMIT_PROXY_RESPONSE_RESET = 'EMIT_PROXY_RESPONSE_RESET';
 
-export const emitPasscodeUpdate = passcode => ({
+export const emitPasswordUpdate = password => ({
   type: EMIT_BUZZ_CODE_UPDATE,
-  passcode
+  password
 });
 
-export const emitSendEvent = (passcode, proxy, events) => ({
+export const emitSendEvent = (password, proxy, events) => ({
   type: EMIT_SEND_EVENT,
-  passcode,
+  password,
   proxy,
   events
 });
@@ -35,7 +35,7 @@ const initialState = {
   documentTitle: 'Guest',
   spotifyURI: '',
   rgb: { r: 255, g: 0, b: 255 },
-  passcode: cookies.get('passcode') || ''
+  password: cookies.get('password') || ''
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -52,7 +52,7 @@ const homeReducer = (state = initialState, action) => {
 
     [EMIT_BUZZ_CODE_UPDATE]: () => ({
       ...state,
-      passcode: action.passcode
+      password: action.password
     }),
 
     [EMIT_SPOTIFY_URI_UPDATE]: () => ({

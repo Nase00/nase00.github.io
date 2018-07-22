@@ -15,8 +15,8 @@ class GuestController extends PureComponent {
 
   render() {
     const { location, proxyResponseStatus, actions } = this.props;
-    const { passcode, proxy } = queryString.parse(location.search);
-    const triggerEvents = (events) => () => actions.emitSendEvent(passcode, proxy, events);
+    const { password, proxy } = queryString.parse(location.search);
+    const triggerEvents = events => () => actions.emitSendEvent({ password, proxy, events });
 
     return (
       <Layout className='guest-container' style={statusColors[proxyResponseStatus]}>
@@ -25,7 +25,7 @@ class GuestController extends PureComponent {
           triggerEvents={triggerEvents}
           toggleDeadboltInput={this.toggleDeadboltInput}
           {...this.props}
-          passcode={passcode}/>
+          password={password}/>
       </Layout>
     );
   }
@@ -35,10 +35,10 @@ GuestController.propTypes = {
   documentTitle: PropTypes.string.isRequired,
   location: PropTypes.shape({
     query: PropTypes.shape({
-      passcode: PropTypes.string
+      password: PropTypes.string
     })
   }),
-  passcode: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
   proxy: PropTypes.string,
   proxyResponseStatus: PropTypes.number
 };

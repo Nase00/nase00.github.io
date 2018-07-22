@@ -7,7 +7,7 @@ import * as GuestActions from '../../ducks/guest';
 
 const mapStateToProps = ({ guestReducer }) => ({
   documentTitle: guestReducer.documentTitle,
-  passcode: guestReducer.passcode,
+  password: guestReducer.password,
   spotifyURI: guestReducer.spotifyURI,
   rgb: guestReducer.rgb
 });

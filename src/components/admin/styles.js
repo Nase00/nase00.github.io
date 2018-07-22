@@ -1,5 +1,5 @@
 import { WHITE, PRIMARY_COLOR, LIGHT_GREY } from 'styles/colors';
-console.log(PRIMARY_COLOR);
+
 const styles = {
   '.tabs': {
     margin: '0 auto',
@@ -19,7 +19,7 @@ const styles = {
     color: LIGHT_GREY
   },
 
-  '.operations-passcode-input': {
+  '.operations-password-input': {
     width: '200px',
     margin: '40px auto 0'
   },

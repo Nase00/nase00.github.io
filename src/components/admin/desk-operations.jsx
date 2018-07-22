@@ -94,7 +94,7 @@ const DeskOperations = (props) => {
 };
 
 DeskOperations.propTypes = {
-  passcode: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
   deskHeightInputDisabled: PropTypes.bool.isRequired,
   toggleDeskHeightInput: PropTypes.func.isRequired,
   triggerEvents: PropTypes.func.isRequired,

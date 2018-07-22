@@ -11,42 +11,46 @@ export const EMIT_PROXY_RESPONSE_RESET = 'EMIT_PROXY_RESPONSE_RESET';
 export const EMIT_TOGGLE_DEADBOLT_INPUT = 'EMIT_TOGGLE_DEADBOLT_INPUT';
 export const EMIT_TOGGLE_DESK_HEIGHT_INPUT = 'EMIT_TOGGLE_DESK_HEIGHT_INPUT';
 export const EMIT_SEND_DEADBOLT_COM = 'EMIT_SEND_DEADBOLT_COM';
+export const EMIT_HASHED_PASSWORD_UPDATE = 'EMIT_HASHED_PASSWORD_UPDATE';
 
-export const emitHandleTabChange = (tabsIndex) => ({
+export const emitHandleTabChange = tabsIndex => ({
   type: EMIT_HANDLE_TAB_CHANGE,
   tabsIndex
 });
 
-export const emitHTSpeakersToggle = (useHTSpeakers) => ({
+export const emitHTSpeakersToggle = useHTSpeakers => ({
   type: EMIT_HT_SPEAKERS_TOGGLE,
   useHTSpeakers
 });
 
-export const emitPasscodeUpdate = (passcode) => ({
+export const emitPasswordUpdate = password => ({
   type: EMIT_BUZZ_CODE_UPDATE,
-  passcode
+  password
 });
 
-export const emitSendEvent = (passcode, proxy, events) => ({
+export const emitSendEvent = params => ({
   type: EMIT_SEND_EVENT,
-  passcode,
-  proxy,
-  events
+  ...params
 });
 
-export const emitToggleDeadboltInput = (deadboltInputDisabled) => ({
+export const emitToggleDeadboltInput = deadboltInputDisabled => ({
   type: EMIT_TOGGLE_DEADBOLT_INPUT,
   deadboltInputDisabled
 });
 
-export const emitToggleDeskHeightInput = (deskHeightInputDisabled) => ({
+export const emitToggleDeskHeightInput = deskHeightInputDisabled => ({
   type: EMIT_TOGGLE_DESK_HEIGHT_INPUT,
   deskHeightInputDisabled
 });
 
-export const emitSendDeadboltCom = (passcode) => ({
+export const emitSendDeadboltCom = password => ({
   type: EMIT_SEND_DEADBOLT_COM,
-  passcode
+  password
+});
+
+export const emithashedPasswordUpdate = hashedPassword => ({
+  type: EMIT_HASHED_PASSWORD_UPDATE,
+  hashedPassword
 });
 
 const initialState = {
@@ -55,7 +59,8 @@ const initialState = {
   deadboltInputDisabled: true,
   deskHeightInputDisabled: true,
   useHTSpeakers: false,
-  passcode: cookies.get('passcode') || ''
+  password: cookies.get('password') || '',
+  hashedPassword: ''
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -71,11 +76,11 @@ const homeReducer = (state = initialState, action) => {
     }),
 
     [EMIT_BUZZ_CODE_UPDATE]() {
-      cookies.set('passcode', action.passcode);
+      cookies.set('password', action.password);
 
       return {
         ...state,
-        passcode: action.passcode
+        password: action.password
       };
     },
 
@@ -97,6 +102,11 @@ const homeReducer = (state = initialState, action) => {
     [EMIT_PROXY_RESPONSE_RESET]: () => ({
       ...state,
       proxyResponseStatus: undefined
+    }),
+
+    [EMIT_HASHED_PASSWORD_UPDATE]: () => ({
+      ...state,
+      hashedPassword: action.hashedPassword
     })
   };
 

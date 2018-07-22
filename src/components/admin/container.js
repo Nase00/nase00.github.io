@@ -11,7 +11,8 @@ const mapStateToProps = ({ adminReducer }) => ({
   useHTSpeakers: adminReducer.useHTSpeakers,
   deadboltInputDisabled: adminReducer.deadboltInputDisabled,
   deskHeightInputDisabled: adminReducer.deskHeightInputDisabled,
-  passcode: adminReducer.passcode,
+  password: adminReducer.password,
+  hashedPassword: adminReducer.hashedPassword,
   proxyResponseStatus: adminReducer.proxyResponseStatus
 });
 
@@ -19,4 +20,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(AdminActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminController);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminController);

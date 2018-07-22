@@ -11,7 +11,7 @@ import styles from './styles';
 class MainOperations extends PureComponent {
   static propTypes = {
     actions: PropTypes.shape({
-      emitPasscodeUpdate: PropTypes.func.isRequired,
+      emitPasswordUpdate: PropTypes.func.isRequired,
       emitRGBUpdate: PropTypes.func.isRequired
     }),
     rgb: PropTypes.shape({
@@ -19,7 +19,7 @@ class MainOperations extends PureComponent {
       g: PropTypes.number.isRequired,
       b: PropTypes.number.isRequired
     }),
-    passcode: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
     spotifyURI: PropTypes.string.isRequired,
     triggerEvents: PropTypes.func.isRequired
   };
@@ -32,74 +32,75 @@ class MainOperations extends PureComponent {
   BEGIN_DELAY = 10000;
   RESET_DELAY = 110000;
 
-  triggerGateEvents = passcode => this.props.triggerEvents([
-    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
-    {
-      type: 'EMIT_FORWARD_HTTP_REQUEST',
-      key: 'buzz',
-      body: { code: passcode }
-    },
-    {
-      type: 'EMIT_SEND_SPOTIFY_COMMAND',
-      name: 'playerPlay',
-      uris: [this.props.spotifyURI],
-      delay: this.BEGIN_DELAY,
-      ...this.SPOTIFY_PARAMS
-    },
-    {
-      type: 'EMIT_SEND_SPOTIFY_COMMAND',
-      name: 'playerShuffle',
-      state: true,
-      delay: this.BEGIN_DELAY,
-      ...this.SPOTIFY_PARAMS
-    },
-    {
-      type: 'EMIT_SEND_SPOTIFY_COMMAND',
-      name: 'playerVolume',
-      volumePercent: 100,
-      delay: this.BEGIN_DELAY,
-      ...this.SPOTIFY_PARAMS
-    },
-    {
-      type: 'EMIT_SEND_HUE_COMMAND',
-      func: 'rgb',
-      arg: Object.values(this.props.rgb),
-      id: 3,
-      conditions: { locked: false, ajar: true },
-      delay: this.BEGIN_DELAY
-    },
-    {
-      type: 'EMIT_SEND_SPOTIFY_COMMAND',
-      name: 'playerPlay',
-      context_uri: 'spotify:user:nasezero:playlist:4IZGEV2ts6jdIDjtug7ekr', // Halloween special
-      delay: this.RESET_DELAY,
-      ...this.SPOTIFY_PARAMS
-    },
-    {
-      type: 'EMIT_SEND_SPOTIFY_COMMAND',
-      name: 'playerVolume',
-      volumePercent: 70,
-      delay: this.RESET_DELAY
-    },
-    {
-      type: 'EMIT_SEND_HUE_COMMAND',
-      func: 'ct',
-      arg: 350,
-      id: 3,
-      delay: this.RESET_DELAY - 50
-    },
-    {
-      type: 'EMIT_SEND_HUE_COMMAND',
-      func: 'brightness',
-      arg: 20,
-      id: 3,
-      delay: this.RESET_DELAY - 25
-    }
-  ]);
+  triggerGateEvents = password =>
+    this.props.triggerEvents([
+      { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
+      {
+        type: 'EMIT_FORWARD_HTTP_REQUEST',
+        key: 'buzz',
+        body: { code: password }
+      },
+      {
+        type: 'EMIT_SEND_SPOTIFY_COMMAND',
+        name: 'playerPlay',
+        uris: [this.props.spotifyURI],
+        delay: this.BEGIN_DELAY,
+        ...this.SPOTIFY_PARAMS
+      },
+      {
+        type: 'EMIT_SEND_SPOTIFY_COMMAND',
+        name: 'playerShuffle',
+        state: true,
+        delay: this.BEGIN_DELAY,
+        ...this.SPOTIFY_PARAMS
+      },
+      {
+        type: 'EMIT_SEND_SPOTIFY_COMMAND',
+        name: 'playerVolume',
+        volumePercent: 100,
+        delay: this.BEGIN_DELAY,
+        ...this.SPOTIFY_PARAMS
+      },
+      {
+        type: 'EMIT_SEND_HUE_COMMAND',
+        func: 'rgb',
+        arg: Object.values(this.props.rgb),
+        id: 3,
+        conditions: { locked: false, ajar: true },
+        delay: this.BEGIN_DELAY
+      },
+      {
+        type: 'EMIT_SEND_SPOTIFY_COMMAND',
+        name: 'playerPlay',
+        context_uri: 'spotify:user:nasezero:playlist:4IZGEV2ts6jdIDjtug7ekr', // Halloween special
+        delay: this.RESET_DELAY,
+        ...this.SPOTIFY_PARAMS
+      },
+      {
+        type: 'EMIT_SEND_SPOTIFY_COMMAND',
+        name: 'playerVolume',
+        volumePercent: 70,
+        delay: this.RESET_DELAY
+      },
+      {
+        type: 'EMIT_SEND_HUE_COMMAND',
+        func: 'ct',
+        arg: 350,
+        id: 3,
+        delay: this.RESET_DELAY - 50
+      },
+      {
+        type: 'EMIT_SEND_HUE_COMMAND',
+        func: 'brightness',
+        arg: 20,
+        id: 3,
+        delay: this.RESET_DELAY - 25
+      }
+    ]);
 
   render() {
     const { actions, spotifyURI, rgb } = this.props;
-    const { passcode } = queryString.parse(location.search);
+    const { password } = queryString.parse(location.search);
     const color = genRGB(...Object.values(rgb));
 
     const helpLink = (
@@ -113,8 +114,8 @@ class MainOperations extends PureComponent {
     return (
       <section className='operations'>
         <p className='operations-header'>
-          Use this app to get through the gate. The lights will change to
-          your <span style={styles.coloredText(color)}>selected color </span>
+          Use this app to get through the gate. The lights will change to your{' '}
+          <span style={styles.coloredText(color)}>selected color </span>
           and your song will play once you enter the apartment.
         </p>
         <HuePicker height='30px' width='100%' color={rgb} onChange={actions.emitRGBUpdate}/>
@@ -122,17 +123,19 @@ class MainOperations extends PureComponent {
         <table className='operations-table'>
           <tbody>
             <tr>
-              <td><Avatar icon='queue_music'/></td>
-              <td><SpotifyURIInput value={spotifyURI} {...this.props}/></td>
+              <td>
+                <Avatar icon='queue_music'/>
+              </td>
+              <td>
+                <SpotifyURIInput value={spotifyURI} {...this.props}/>
+              </td>
             </tr>
           </tbody>
         </table>
-        <Button className='submit-command' onClick={this.triggerGateEvents(passcode)}>
+        <Button className='submit-command' onClick={this.triggerGateEvents(password)}>
           Open Gate
         </Button>
-        <p className='operations-help'>
-          Click {helpLink} for help on finding Spotify URIs
-        </p>
+        <p className='operations-help'>Click {helpLink} for help on finding Spotify URIs</p>
       </section>
     );
   }

@@ -3,20 +3,33 @@ import PropTypes from 'prop-types';
 import { Tab, Tabs, Layout } from 'react-toolbox';
 import { Style } from 'radium';
 import queryString from 'query-string';
+import scrypt from 'scrypt-async';
 
+import { HASH_INTERVAL_REFRESH, SCRYPT_SETTINGS } from 'constants';
 import MainOperations from './main-operations';
 import DeskOperations from './desk-operations';
-
 import styles, { statusColors } from './styles';
 import theme from './theme.scss';
 
 class AdminController extends PureComponent {
   componentWillMount() {
     document.title = this.props.documentTitle;
+
+    this.generateHash();
+    setInterval(this.generateHash(), HASH_INTERVAL_REFRESH);
   }
 
-  toggleHTSpeakers = () =>
-    this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
+  generateHash() {
+    const { actions, location } = this.props;
+    const { password = '', id } = queryString.parse(location.search);
+
+    scrypt(password, id, SCRYPT_SETTINGS, hashedPassword => {
+      console.log(hashedPassword);
+      actions.emithashedPasswordUpdate(hashedPassword);
+    });
+  }
+
+  toggleHTSpeakers = () => this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
 
   toggleDeadboltInput = () =>
     this.props.actions.emitToggleDeadboltInput(!this.props.deadboltInputDisabled);
@@ -25,9 +38,15 @@ class AdminController extends PureComponent {
     this.props.actions.emitToggleDeskHeightInput(!this.props.deskHeightInputDisabled);
 
   render() {
-    const { location, tabsIndex, proxyResponseStatus, actions } = this.props;
-    const { passcode, proxy } = queryString.parse(location.search);
-    const triggerEvents = events => () => actions.emitSendEvent(passcode, proxy, events);
+    const { location, tabsIndex, hashedPassword, proxyResponseStatus, actions } = this.props;
+    const { id, proxy } = queryString.parse(location.search);
+    const triggerEvents = events => () =>
+      actions.emitSendEvent({
+        id,
+        hashedPassword,
+        proxy,
+        events
+      });
 
     return (
       <Layout className='admin-container' style={statusColors[proxyResponseStatus]}>
@@ -42,7 +61,7 @@ class AdminController extends PureComponent {
               triggerEvents={triggerEvents}
               toggleDeadboltInput={this.toggleDeadboltInput}
               {...this.props}
-              passcode={passcode}/>
+              hashedPassword={hashedPassword}/>
           </Tab>
           <Tab label='Desk' className='tab'>
             <DeskOperations
@@ -61,10 +80,11 @@ AdminController.propTypes = {
   documentTitle: PropTypes.string.isRequired,
   location: PropTypes.shape({
     query: PropTypes.shape({
-      passcode: PropTypes.string
+      password: PropTypes.string
     })
   }),
-  passcode: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  hashedPassword: PropTypes.string.isRequired,
   proxy: PropTypes.string,
   tabsIndex: PropTypes.number.isRequired,
   deadboltInputDisabled: PropTypes.bool.isRequired,
@@ -73,7 +93,7 @@ AdminController.propTypes = {
   proxyResponseStatus: PropTypes.number,
   actions: PropTypes.shape({
     emitHandleTabChange: PropTypes.func.isRequired,
-    emitPasscodeUpdate: PropTypes.func.isRequired,
+    emitPasswordUpdate: PropTypes.func.isRequired,
     emitHTSpeakersToggle: PropTypes.func.isRequired,
     emitToggleDeadboltInput: PropTypes.func.isRequired,
     emitToggleDeskHeightInput: PropTypes.func.isRequired
