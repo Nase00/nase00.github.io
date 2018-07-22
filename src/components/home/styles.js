@@ -3,7 +3,7 @@ import { WHITE, BLACK, DARK_GREY, PRIMARY_COLOR, SECONDARY_COLOR } from 'styles/
 const styles = {
   '.home-card': {
     textAlign: 'center',
-    margin: '18% auto 0',
+    margin: '10% auto 0',
     maxWidth: '400px',
     color: WHITE,
     border: `1px solid ${PRIMARY_COLOR}`,

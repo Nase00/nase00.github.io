@@ -8,6 +8,7 @@ import scrypt from 'scrypt-async';
 import { HASH_INTERVAL_REFRESH, SCRYPT_SETTINGS } from 'constants';
 import MainOperations from './main-operations';
 import DeskOperations from './desk-operations';
+import MusicOperations from './music-operations';
 import styles, { statusColors } from './styles';
 import theme from './theme.scss';
 
@@ -58,17 +59,22 @@ class AdminController extends PureComponent {
           theme={theme}>
           <Tab label='Main' className='tab'>
             <MainOperations
+              {...this.props}
               triggerEvents={triggerEvents}
               toggleDeadboltInput={this.toggleDeadboltInput}
-              {...this.props}
-              hashedPassword={hashedPassword}/>
+              {...this.props}/>
           </Tab>
           <Tab label='Desk' className='tab'>
             <DeskOperations
+              {...this.props}
               triggerEvents={triggerEvents}
-              toggleHTSpeakers={this.toggleHTSpeakers}
-              toggleDeskHeightInput={this.toggleDeskHeightInput}
-              {...this.props}/>
+              toggleDeskHeightInput={this.toggleDeskHeightInput}/>
+          </Tab>
+          <Tab label='Music' className='tab'>
+            <MusicOperations
+              {...this.props}
+              triggerEvents={triggerEvents}
+              toggleHTSpeakers={this.toggleHTSpeakers}/>
           </Tab>
         </Tabs>
       </Layout>

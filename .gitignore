@@ -10,6 +10,7 @@ secrets
 # Misc
 .DS_Store
 .snyk
+.vscode
 
 # Environment variables
 environment/*.json

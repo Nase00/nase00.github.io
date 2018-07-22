@@ -24,12 +24,17 @@ const MainOperations = props => {
     toggleDeadboltInput();
   };
 
-  const triggerDRLightEvents = triggerEvents([
+  const triggerKILightEvents = triggerEvents([
     { type: 'EMIT_SEND_HUE_COMMAND', id: 1, func: 'toggle' }
   ]);
 
+  const triggerDRLightEvents = triggerEvents([
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 4, func: 'toggle' }
+  ]);
+
   const triggerLRLightEvents = triggerEvents([
-    { type: 'EMIT_SEND_HUE_COMMAND', id: 3, func: 'toggle' }
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 3, func: 'toggle' },
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 2, func: 'toggle' }
   ]);
 
   return (
@@ -49,6 +54,9 @@ const MainOperations = props => {
       </Button>
       <Button className='submit-command' onClick={triggerLRLightEvents} raised>
         LR Lights Toggle
+      </Button>
+      <Button className='submit-command' onClick={triggerKILightEvents} raised>
+        KI Lights Toggle
       </Button>
       <div className='switches'>
         <Switch
