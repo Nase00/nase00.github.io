@@ -88,7 +88,6 @@ AdminController.propTypes = {
       password: PropTypes.string
     })
   }),
-  password: PropTypes.string.isRequired,
   hashedPassword: PropTypes.string.isRequired,
   proxy: PropTypes.string,
   tabsIndex: PropTypes.number.isRequired,

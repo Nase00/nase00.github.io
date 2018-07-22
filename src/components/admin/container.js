@@ -11,7 +11,6 @@ const mapStateToProps = ({ adminReducer }) => ({
   useHTSpeakers: adminReducer.useHTSpeakers,
   deadboltInputDisabled: adminReducer.deadboltInputDisabled,
   deskHeightInputDisabled: adminReducer.deskHeightInputDisabled,
-  password: adminReducer.password,
   hashedPassword: adminReducer.hashedPassword,
   proxyResponseStatus: adminReducer.proxyResponseStatus
 });

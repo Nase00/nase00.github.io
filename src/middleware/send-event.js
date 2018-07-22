@@ -1,7 +1,8 @@
 import { EMIT_PROXY_RESPONSE, EMIT_PROXY_RESPONSE_RESET } from '../ducks/admin';
 import { PROXY_RESPONSE_RESET_TIMOUT } from '../constants';
 
-const sendEvent = (next, { hashedPassword, id, proxy, events }) =>
+const sendEvent = (next, { hashedPassword, id, proxy, events }) => {
+  console.log(hashedPassword, id, proxy, events);
   fetch(proxy, {
     method: 'post',
     headers: {
@@ -35,5 +36,6 @@ const sendEvent = (next, { hashedPassword, id, proxy, events }) =>
       resetResponse();
     }
   });
+};
 
 export default sendEvent;

@@ -4,16 +4,26 @@ import { connect } from 'react-redux';
 import GuestController from './controller';
 
 import * as GuestActions from '../../ducks/guest';
+import * as AdminActions from '../../ducks/admin';
 
-const mapStateToProps = ({ guestReducer }) => ({
+const mapStateToProps = ({ guestReducer, adminReducer }) => ({
   documentTitle: guestReducer.documentTitle,
-  password: guestReducer.password,
   spotifyURI: guestReducer.spotifyURI,
-  rgb: guestReducer.rgb
+  rgb: guestReducer.rgb,
+  hashedPassword: adminReducer.hashedPassword
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(GuestActions, dispatch)
+  actions: bindActionCreators(
+    {
+      ...AdminActions,
+      ...GuestActions
+    },
+    dispatch
+  )
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GuestController);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GuestController);

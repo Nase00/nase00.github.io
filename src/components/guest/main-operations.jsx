@@ -19,7 +19,7 @@ class MainOperations extends PureComponent {
       g: PropTypes.number.isRequired,
       b: PropTypes.number.isRequired
     }),
-    password: PropTypes.string.isRequired,
+    hashedPassword: PropTypes.string.isRequired,
     spotifyURI: PropTypes.string.isRequired,
     triggerEvents: PropTypes.func.isRequired
   };
@@ -32,13 +32,13 @@ class MainOperations extends PureComponent {
   BEGIN_DELAY = 10000;
   RESET_DELAY = 110000;
 
-  triggerGateEvents = password =>
+  triggerGateEvents = hashedPassword =>
     this.props.triggerEvents([
       { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
       {
         type: 'EMIT_FORWARD_HTTP_REQUEST',
         key: 'buzz',
-        body: { code: password }
+        body: { code: hashedPassword }
       },
       {
         type: 'EMIT_SEND_SPOTIFY_COMMAND',
@@ -99,8 +99,7 @@ class MainOperations extends PureComponent {
     ]);
 
   render() {
-    const { actions, spotifyURI, rgb } = this.props;
-    const { password } = queryString.parse(location.search);
+    const { actions, hashedPassword, spotifyURI, rgb } = this.props;
     const color = genRGB(...Object.values(rgb));
 
     const helpLink = (
@@ -132,7 +131,7 @@ class MainOperations extends PureComponent {
             </tr>
           </tbody>
         </table>
-        <Button className='submit-command' onClick={this.triggerGateEvents(password)}>
+        <Button className='submit-command' onClick={this.triggerGateEvents(hashedPassword)}>
           Open Gate
         </Button>
         <p className='operations-help'>Click {helpLink} for help on finding Spotify URIs</p>
