@@ -59,9 +59,9 @@ class AdminController extends PureComponent {
           <Tab label='Main' className='tab'>
             <MainOperations
               {...this.props}
+              id={id}
               triggerEvents={triggerEvents}
-              toggleDeadboltInput={this.toggleDeadboltInput}
-              {...this.props}/>
+              toggleDeadboltInput={this.toggleDeadboltInput}/>
           </Tab>
           <Tab label='Desk' className='tab'>
             <DeskOperations

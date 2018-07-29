@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { Switch, Button } from 'react-toolbox';
 
 const MainOperations = props => {
-  const { hashedPassword, triggerEvents, deadboltInputDisabled, toggleDeadboltInput } = props;
+  const { id, hashedPassword, triggerEvents, deadboltInputDisabled, toggleDeadboltInput } = props;
 
   const deadboltInputClasses = classnames('submit-command', {
     disabled: deadboltInputDisabled
@@ -18,7 +18,7 @@ const MainOperations = props => {
   const triggerDeadboltEvents = () => {
     triggerEvents([
       { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
-      { type: 'EMIT_TRIGGER_PHOTON_FUNCTION', key: 'deadbolt', argument: hashedPassword }
+      { type: 'EMIT_TRIGGER_PHOTON_FUNCTION', key: 'deadbolt', argument: id }
     ])();
 
     toggleDeadboltInput();
@@ -70,6 +70,7 @@ const MainOperations = props => {
 };
 
 MainOperations.propTypes = {
+  id: PropTypes.string.isRequired,
   hashedPassword: PropTypes.string.isRequired,
   triggerEvents: PropTypes.func.isRequired,
   deadboltInputDisabled: PropTypes.bool.isRequired,
