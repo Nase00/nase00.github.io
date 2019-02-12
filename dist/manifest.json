@@ -1,4 +1,15 @@
 {
-  "main.js": "/bundle.js",
-  "index.html": "/index.html"
+  "short_name": "sowiecki",
+  "name": "Sean Owiecki",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "690x690",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#2B9EB3",
+  "background_color": "#3F3F3F"
 }
