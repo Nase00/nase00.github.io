@@ -4,7 +4,14 @@ import classnames from 'classnames';
 import { Switch, Button } from 'react-toolbox';
 
 const MainOperations = props => {
-  const { id, hashedPassword, triggerEvents, deadboltInputDisabled, toggleDeadboltInput } = props;
+  const {
+    id,
+    hashedPassword,
+    triggerEvents,
+    deadboltInputDisabled,
+    toggleDeadboltInput,
+    addToHomeScreen
+  } = props;
 
   const deadboltInputClasses = classnames('submit-command', {
     disabled: deadboltInputDisabled
@@ -70,7 +77,7 @@ const MainOperations = props => {
 };
 
 MainOperations.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   hashedPassword: PropTypes.string.isRequired,
   triggerEvents: PropTypes.func.isRequired,
   deadboltInputDisabled: PropTypes.bool.isRequired,
