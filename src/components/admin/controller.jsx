@@ -20,30 +20,6 @@ class AdminController extends PureComponent {
     setInterval(this.generateHash(), HASH_INTERVAL_REFRESH);
   }
 
-  componentDidMount() {
-    this.manifestUpdate();
-  }
-
-  // Doesn't seem to work anymore
-  manifestUpdate() {
-    const manifest = `{
-      "short_name": "sowiecki",
-      "name": "Sean Owiecki",
-      "icons": [{
-        "src": "logo.png",
-        "sizes": "690x690",
-        "type": "image/png"
-      }],
-      "start_url": "${window.location.href.replace(`${window.location.origin}/#`, '')}",
-      "display": "standalone",
-      "theme_color": "#2B9EB3",
-      "background_color": "#3F3F3F"
-    }`.replace(/\n| /g, '');
-
-    document.querySelector('link[rel=manifest]').href
-      = `data:application/manifest+json,${manifest}`;
-  }
-
   generateHash() {
     const { actions, location } = this.props;
     const { password = '', id } = queryString.parse(location.search);
