@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import Application from './application';
+import registerServiceWorker from './registerServiceWorker';
 
 const node = document.getElementById('root');
 const render = (Component) => ReactDOM.render(
@@ -19,3 +20,5 @@ if (module.hot) {
     render(Application, node);
   });
 }
+
+registerServiceWorker();

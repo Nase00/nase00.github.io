@@ -1,5 +1,8 @@
 /* globals __dirname */
 const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('lodash/merge');
 const filter = require('lodash/filter');
@@ -104,5 +107,29 @@ module.exports = {
       filename: 'index.html',
       template: '../src/index.html'
     }),
+    new ManifestPlugin(),
+    new SWPrecacheWebpackPlugin({
+      // By default, a cache-busting query parameter is appended to requests
+      // used to populate the caches, to ensure the responses are fresh.
+      // If a URL is already hashed by Webpack, then there is no concern
+      // about it being stale, and the cache-busting can be skipped.
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'service-worker.js',
+      logger(message) {
+        if (message.indexOf('Total precache size is') === 0) {
+          return;
+        }
+        console.log(message); // eslint-disable-line
+      },
+      minify: true, // minify and uglify the script
+      navigateFallback: '/index.html',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../src/pwa'),
+        to: path.resolve(__dirname, '../dist')
+      }
+    ])
   ]
 };
