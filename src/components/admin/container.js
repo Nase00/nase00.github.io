@@ -12,10 +12,11 @@ const mapStateToProps = ({ adminReducer }) => ({
   deadboltInputDisabled: adminReducer.deadboltInputDisabled,
   deskHeightInputDisabled: adminReducer.deskHeightInputDisabled,
   hashedPassword: adminReducer.hashedPassword,
-  proxyResponseStatus: adminReducer.proxyResponseStatus
+  proxyResponseStatus: adminReducer.proxyResponseStatus,
+  inputValues: adminReducer.inputValues
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(AdminActions, dispatch)
 });
 

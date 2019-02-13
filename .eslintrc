@@ -22,15 +22,18 @@
     "quotes": [2, "single"],
     "arrow-body-style": [2, "as-needed"],
     "func-style": [2, "expression"],
-    "prefer-arrow-callback": [2, {
-      allowNamedFunctions: false,
-      allowUnboundThis: false,
-    }],
+    "prefer-arrow-callback": [
+      2,
+      {
+        "allowNamedFunctions": false,
+        "allowUnboundThis": false
+      }
+    ],
     "func-names": 2,
     "react/jsx-space-before-closing": [2, "never"],
     "react/prefer-es6-class": 2,
     "jsx-quotes": [2, "prefer-single"],
-    "indent": [2, 2, {"SwitchCase": 1}],
+    "indent": [2, 2, { "SwitchCase": 1 }],
     "no-invalid-this": 0,
     "react/jsx-closing-bracket-location": [2, "after-props"],
     "react/jsx-boolean-value": 0,
@@ -43,7 +46,8 @@
     "no-param-reassign": 0,
     "consistent-return": 0,
     "default-case": 0,
-    "no-extra-parens": 0
+    "no-extra-parens": 0,
+    "arrow-parens": [2, "always"]
   },
   "globals": {
     "require": true

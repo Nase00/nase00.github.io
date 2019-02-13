@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Layout } from 'react-toolbox';
 import { Style } from 'radium';
 import queryString from 'query-string';
-import scrypt from 'scrypt-async';
+import cookies from 'js-cookie';
 
-import { HASH_INTERVAL_REFRESH, SCRYPT_SETTINGS } from 'constants';
+import { COOKIE_NAME } from 'constants';
 import MainOperations from './main-operations';
 import styles, { statusColors } from './styles';
 
@@ -13,24 +13,38 @@ class GuestController extends PureComponent {
   componentWillMount() {
     document.title = this.props.documentTitle;
 
-    this.generateHash();
-    setInterval(this.generateHash(), HASH_INTERVAL_REFRESH);
+    this.updateSavedValues();
   }
 
-  generateHash() {
-    const { actions, location } = this.props;
-    const { password = '', id } = queryString.parse(location.search);
+  getSavedValues() {
+    return JSON.parse(cookies.get(COOKIE_NAME));
+  }
 
-    scrypt(password, id, SCRYPT_SETTINGS, hashedPassword => {
-      actions.emithashedPasswordUpdate(hashedPassword);
-    });
+  updateSavedValues() {
+    const { id, password, proxy } = queryString.parse(location.search);
+
+    if (id && password && proxy) {
+      cookies.set(
+        COOKIE_NAME,
+        JSON.stringify({
+          id,
+          password,
+          proxy
+        })
+      );
+    }
   }
 
   render() {
-    const { location, hashedPassword, proxyResponseStatus, actions } = this.props;
-    const { password, id, proxy } = queryString.parse(location.search);
-    const triggerEvents = events => () =>
-      actions.emitSendEvent({ password, hashedPassword, id, proxy, events });
+    const { proxyResponseStatus, actions } = this.props;
+    const { id, password, proxy } = this.getSavedValues();
+    const triggerEvents = (events) => () =>
+      actions.emitSendEvent({
+        id,
+        password,
+        proxy,
+        events
+      });
 
     return (
       <Layout className='guest-container' style={statusColors[proxyResponseStatus]}>

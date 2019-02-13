@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Button } from 'react-toolbox';
 import { HuePicker } from 'react-color';
-import queryString from 'query-string';
 
 import { genRGB } from '../../utils';
 import SpotifyURIInput from './spotify-uri-input';
@@ -11,7 +10,6 @@ import styles from './styles';
 class MainOperations extends PureComponent {
   static propTypes = {
     actions: PropTypes.shape({
-      emitPasswordUpdate: PropTypes.func.isRequired,
       emitRGBUpdate: PropTypes.func.isRequired
     }),
     rgb: PropTypes.shape({
@@ -32,7 +30,7 @@ class MainOperations extends PureComponent {
   BEGIN_DELAY = 10000;
   RESET_DELAY = 110000;
 
-  triggerGateEvents = hashedPassword =>
+  triggerGateEvents = (hashedPassword) =>
     this.props.triggerEvents([
       { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
       {

@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Tab, Tabs, Layout } from 'react-toolbox';
 import { Style } from 'radium';
 import queryString from 'query-string';
-import scrypt from 'scrypt-async';
+import cookies from 'js-cookie';
+import { forEach } from 'lodash';
 
-import { HASH_INTERVAL_REFRESH, SCRYPT_SETTINGS } from 'constants';
+import { COOKIE_NAME } from 'constants';
 import MainOperations from './main-operations';
 import DeskOperations from './desk-operations';
 import MusicOperations from './music-operations';
+import AuthOperations from './auth-operations';
 import styles, { statusColors } from './styles';
 import theme from './theme.scss';
 
@@ -16,19 +18,30 @@ class AdminController extends PureComponent {
   componentWillMount() {
     document.title = this.props.documentTitle;
 
-    this.generateHash();
-    setInterval(this.generateHash(), HASH_INTERVAL_REFRESH);
+    this.updateSavedValues();
   }
 
-  generateHash() {
-    const { actions, location } = this.props;
-    const { password = '', id } = queryString.parse(location.search);
+  getSavedValues() {
+    return JSON.parse(cookies.get(COOKIE_NAME));
+  }
 
-    if (!password || !id) return;
+  updateSavedValues() {
+    const { actions, id, password, proxy } = queryString.parse(location.search);
 
-    scrypt(password, id, SCRYPT_SETTINGS, hashedPassword => {
-      actions.emithashedPasswordUpdate(hashedPassword);
-    });
+    if (id && password && proxy) {
+      cookies.set(
+        COOKIE_NAME,
+        JSON.stringify({
+          id,
+          password,
+          proxy
+        })
+      );
+
+      forEach((value, key) => {
+        actions.emitInputUpdate(key, value);
+      });
+    }
   }
 
   toggleHTSpeakers = () => this.props.actions.emitHTSpeakersToggle(!this.props.useHTSpeakers);
@@ -40,12 +53,12 @@ class AdminController extends PureComponent {
     this.props.actions.emitToggleDeskHeightInput(!this.props.deskHeightInputDisabled);
 
   render() {
-    const { location, tabsIndex, hashedPassword, proxyResponseStatus, actions } = this.props;
-    const { id, proxy } = queryString.parse(location.search);
-    const triggerEvents = events => () =>
+    const { tabsIndex, proxyResponseStatus, actions } = this.props;
+    const { id, password, proxy } = this.getSavedValues();
+    const triggerEvents = (events) => () =>
       actions.emitSendEvent({
         id,
-        hashedPassword,
+        password,
         proxy,
         events
       });
@@ -77,6 +90,9 @@ class AdminController extends PureComponent {
               triggerEvents={triggerEvents}
               toggleHTSpeakers={this.toggleHTSpeakers}/>
           </Tab>
+          <Tab label='Auth' className='tab'>
+            <AuthOperations {...this.props}/>
+          </Tab>
         </Tabs>
       </Layout>
     );
@@ -99,7 +115,6 @@ AdminController.propTypes = {
   proxyResponseStatus: PropTypes.number,
   actions: PropTypes.shape({
     emitHandleTabChange: PropTypes.func.isRequired,
-    emitPasswordUpdate: PropTypes.func.isRequired,
     emitHTSpeakersToggle: PropTypes.func.isRequired,
     emitToggleDeadboltInput: PropTypes.func.isRequired,
     emitToggleDeskHeightInput: PropTypes.func.isRequired

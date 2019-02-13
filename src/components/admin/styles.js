@@ -3,7 +3,7 @@ import { WHITE, PRIMARY_COLOR, LIGHT_GREY } from 'styles/colors';
 const styles = {
   '.tabs': {
     margin: '0 auto',
-    width: '200px'
+    width: '300px'
   },
 
   '.tab': {
@@ -58,6 +58,11 @@ const styles = {
     margin: 'auto',
     width: '300px',
     textAlign: 'left'
+  },
+
+  '.inputs': {
+    margin: '0 auto',
+    width: '300px'
   }
 };
 
