@@ -33,6 +33,8 @@ class AdminController extends PureComponent {
         cookies.remove(COOKIE_NAME);
       }
     }
+
+    return {};
   }
 
   updateSavedValues() {
