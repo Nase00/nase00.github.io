@@ -23,7 +23,16 @@ class AdminController extends PureComponent {
   }
 
   getSavedValues() {
-    return JSON.parse(cookies.get(COOKIE_NAME));
+    const cookie = cookies.get(COOKIE_NAME);
+
+    if (cookie) {
+      try {
+        return JSON.parse(cookie);
+      } catch (e) {
+        console.error(e); // eslint-disable-line
+        cookies.remove(COOKIE_NAME);
+      }
+    }
   }
 
   updateSavedValues() {
