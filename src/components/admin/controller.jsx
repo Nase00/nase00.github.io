@@ -38,6 +38,7 @@ class AdminController extends PureComponent {
   }
 
   updateSavedValues() {
+    const { location } = this.props;
     const { actions, id, password, proxy } = queryString.parse(location.search);
 
     if (id && password && proxy) {
