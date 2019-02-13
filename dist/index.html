@@ -3,44 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <link href="/manifest.json" rel="manifest" />
-    <script language="javascript">
-      // Dirty hack to replace manifest
-      // See https://github.com/Nase00/manifest-generator
-      // TODO probably remove this and move id/password management to localStorage or something
-      (async () => {
-        try {
-          let testConnection = async () =>
-            await fetch(
-              "https://manifest-generator.herokuapp.com/manifest.json",
-              {
-                method: "GET",
-                mode: "no-cors"
-              }
-            );
-          await testConnection(); // Don't care about response, only that it doesn't blow up
-
-          const manifestParams = JSON.stringify({
-            short_name: "sowiecki",
-            name: "Sean Owiecki",
-            icons: [
-              {
-                src: "logo.png",
-                sizes: "690x690",
-                type: "image/png"
-              }
-            ],
-            start_url: window.location.href.replace("/#", "/HASH"),
-            display: "standalone",
-            theme_color: "2B9EB3",
-            background_color: "3F3F3F"
-          });
-
-          document.querySelector("link[rel=manifest]").href =
-            "https://manifest-generator.herokuapp.com/manifest.json?content=" +
-            manifestParams;
-        } catch (e) {}
-      })();
-    </script>
     <meta name="theme-color" content="#2B9EB3" />
     <title>nase00.github.io</title>
     <link
@@ -59,5 +21,5 @@
   </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script type="text/javascript" src="/bundle.js"></script></body>
 </html>

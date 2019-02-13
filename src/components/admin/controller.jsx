@@ -16,6 +16,7 @@ import theme from './theme.scss';
 
 class AdminController extends PureComponent {
   componentWillMount() {
+    document.querySelector('link[rel=manifest]').href = '/manifest-admin.json';
     document.title = this.props.documentTitle;
 
     this.updateSavedValues();
