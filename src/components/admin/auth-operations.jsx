@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'react-toolbox';
-import cookies from 'js-cookie';
 
-import { COOKIE_NAME } from 'constants';
+import { NASE_CRED } from 'constants';
 
 const AuthOperations = (props) => {
   const { actions, inputValues } = props;
-  const setCookie = () => {
-    cookies.set(COOKIE_NAME, JSON.stringify(inputValues));
+  const setLocalStorage = () => {
+    localStorage.setItem(NASE_CRED, JSON.stringify(inputValues));
   };
 
   return (
@@ -30,7 +29,7 @@ const AuthOperations = (props) => {
           value={inputValues.proxy}
           onChange={(value) => actions.emitInputUpdate('proxy', value)}/>
       </div>
-      <Button className='submit-command' onClick={setCookie} raised>
+      <Button className='submit-command' onClick={setLocalStorage} raised>
         Update
       </Button>
     </section>

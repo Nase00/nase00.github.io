@@ -1,6 +1,4 @@
-import cookies from 'js-cookie';
-
-import { COOKIE_NAME } from 'constants';
+import { NASE_CRED } from 'constants';
 import { handleAction } from 'utils';
 
 export const EMIT_INPUT_UPDATE = 'EMIT_INPUT_UPDATE';
@@ -55,8 +53,8 @@ export const emithashedPasswordUpdate = (hashedPassword) => ({
   hashedPassword
 });
 
-const savedInputValuesCookie = cookies.get(COOKIE_NAME);
-const savedInputValues = savedInputValuesCookie ? JSON.parse(cookies.get(COOKIE_NAME)) : {};
+const savedInputValuesFromLS = localStorage.getItem(NASE_CRED);
+const savedInputValues = savedInputValuesFromLS ? JSON.parse(savedInputValuesFromLS) : {};
 const initialState = {
   documentTitle: 'Admin',
   tabsIndex: 0,

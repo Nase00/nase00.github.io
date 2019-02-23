@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { Layout } from 'react-toolbox';
 import { Style } from 'radium';
 import queryString from 'query-string';
-import cookies from 'js-cookie';
 
-import { COOKIE_NAME } from 'constants';
+import { NASE_CRED } from 'constants';
 import MainOperations from './main-operations';
 import styles, { statusColors } from './styles';
 
@@ -17,15 +16,15 @@ class GuestController extends PureComponent {
   }
 
   getSavedValues() {
-    return JSON.parse(cookies.get(COOKIE_NAME));
+    return JSON.parse(localStorage.getItem(NASE_CRED));
   }
 
   updateSavedValues() {
     const { id, password, proxy } = queryString.parse(location.search);
 
     if (id && password && proxy) {
-      cookies.set(
-        COOKIE_NAME,
+      localStorage.setItem(
+        NASE_CRED,
         JSON.stringify({
           id,
           password,

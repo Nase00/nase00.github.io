@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Tab, Tabs, Layout } from 'react-toolbox';
 import { Style } from 'radium';
 import queryString from 'query-string';
-import cookies from 'js-cookie';
 import { forEach } from 'lodash';
 
-import { COOKIE_NAME } from 'constants';
+import { NASE_CRED } from 'constants';
 import MainOperations from './main-operations';
 import DeskOperations from './desk-operations';
 import MusicOperations from './music-operations';
@@ -23,14 +22,14 @@ class AdminController extends PureComponent {
   }
 
   getSavedValues() {
-    const cookie = cookies.get(COOKIE_NAME);
+    const auth = localStorage.getItem(NASE_CRED);
 
-    if (cookie) {
+    if (auth) {
       try {
-        return JSON.parse(cookie);
+        return JSON.parse(auth);
       } catch (e) {
         console.error(e); // eslint-disable-line
-        cookies.remove(COOKIE_NAME);
+        localStorage.removeItem(NASE_CRED);
       }
     }
 
@@ -42,8 +41,8 @@ class AdminController extends PureComponent {
     const { actions, id, password, proxy } = queryString.parse(location.search);
 
     if (id && password && proxy) {
-      cookies.set(
-        COOKIE_NAME,
+      localStorage.setItem(
+        NASE_CRED,
         JSON.stringify({
           id,
           password,
