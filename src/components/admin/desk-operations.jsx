@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Switch, Button } from 'react-toolbox';
 
-const DeskOperations = props => {
+const DeskOperations = (props) => {
   const { triggerEvents, deskHeightInputDisabled, toggleDeskHeightInput } = props;
 
   const deskHeightInputClasses = classnames('submit-command', {
@@ -11,14 +11,22 @@ const DeskOperations = props => {
   });
 
   const triggerPcOn = triggerEvents([
-    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
+    {
+      type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+        write: { command: 'displayTemp', duration: 2, animName: 'Fast Green Fade' }
+      }
+    },
     { type: 'EMIT_TRIGGER_PHOTON_FUNCTION', key: 'secretary' },
     { type: 'EMIT_TRIGGER_PHOTON_FUNCTION', key: 'lamprey' }
   ]);
 
   const generateDeskFunc = (deskFuncKey, timeout) =>
     triggerEvents([
-      { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashBlue' },
+      {
+        type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+          write: { command: 'displayTemp', duration: 5, animName: 'Medium Blue Fade' }
+        }
+      },
       {
         type: 'EMIT_FORWARD_HTTP_REQUEST',
         key: deskFuncKey,
@@ -61,7 +69,7 @@ const DeskOperations = props => {
           label='Desk Height Safety'
           className={!deskHeightInputDisabled ? 'switch-active' : 'switch-inactive'}
           checked={!deskHeightInputDisabled}
-          onChange={toggleDeskHeightInput}/>
+          onChange={toggleDeskHeightInput} />
       </div>
     </section>
   );
