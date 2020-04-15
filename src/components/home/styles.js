@@ -11,6 +11,9 @@ const styles = {
     backgroundColor: DARK_GREY,
     transition: 'all .25s ease-out'
   },
+  h5: {
+    'text-align': 'left'
+  },
   '.home-card:hover': {
     transition: 'all .25s ease-out',
     border: `1px solid ${SECONDARY_COLOR}`

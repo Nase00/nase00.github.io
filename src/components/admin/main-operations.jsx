@@ -4,20 +4,28 @@ import classnames from 'classnames';
 import { Switch, Button } from 'react-toolbox';
 
 const MainOperations = (props) => {
-  const { id, hashedPassword, triggerEvents, deadboltInputDisabled, toggleDeadboltInput } = props;
+  const { hashedPassword, triggerEvents, deadboltInputDisabled, toggleDeadboltInput } = props;
 
   const deadboltInputClasses = classnames('submit-command', {
     disabled: deadboltInputDisabled
   });
 
   const triggerGateEvents = triggerEvents([
-    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
+    {
+      type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+        write: { command: 'displayTemp', duration: 2, animName: 'Fast Green Pulse' }
+      }
+    },
     { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'buzz', body: { code: hashedPassword } }
   ]);
 
   const triggerDeadboltEvents = () => {
     triggerEvents([
-      { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
+      {
+        type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+          write: { command: 'displayTemp', duration: 5, animName: 'Medium Blue Fade' }
+        }
+      },
       { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'deadbolt' }
     ])();
 
@@ -63,7 +71,7 @@ const MainOperations = (props) => {
           label='Deadbolt Safety'
           className={!deadboltInputDisabled ? 'switch-active' : 'switch-inactive'}
           checked={!deadboltInputDisabled}
-          onChange={toggleDeadboltInput}/>
+          onChange={toggleDeadboltInput} />
       </div>
     </section>
   );

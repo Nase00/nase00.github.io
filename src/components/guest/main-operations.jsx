@@ -32,7 +32,11 @@ class MainOperations extends PureComponent {
 
   triggerGateEvents = (hashedPassword) =>
     this.props.triggerEvents([
-      { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashGreen' },
+      {
+        type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+          write: { command: 'displayTemp', duration: 5, animName: 'Fast Green Fade' }
+        }
+      },
       {
         type: 'EMIT_FORWARD_HTTP_REQUEST',
         key: 'buzz',
@@ -115,16 +119,16 @@ class MainOperations extends PureComponent {
           <span style={styles.coloredText(color)}>selected color </span>
           and your song will play once you enter the apartment.
         </p>
-        <HuePicker height='30px' width='100%' color={rgb} onChange={actions.emitRGBUpdate}/>
-        <br/>
+        <HuePicker height='30px' width='100%' color={rgb} onChange={actions.emitRGBUpdate} />
+        <br />
         <table className='operations-table'>
           <tbody>
             <tr>
               <td>
-                <Avatar icon='queue_music'/>
+                <Avatar icon='queue_music' />
               </td>
               <td>
-                <SpotifyURIInput value={spotifyURI} {...this.props}/>
+                <SpotifyURIInput value={spotifyURI} {...this.props} />
               </td>
             </tr>
           </tbody>

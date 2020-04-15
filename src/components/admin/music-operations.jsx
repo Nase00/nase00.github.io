@@ -15,8 +15,9 @@ const MusicOperations = props => {
 
   const triggerSpeakersToDesk = triggerEvents([
     {
-      type: 'EMIT_FORWARD_HTTP_REQUEST',
-      key: 'flashGreen'
+      type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+        write: { command: 'displayTemp', duration: 5, animName: 'Medium Blue Pulse' }
+      }
     },
     {
       type: 'EMIT_SEND_UNIFIED_COMMAND',
@@ -29,8 +30,9 @@ const MusicOperations = props => {
 
   const triggerSpeakersToHT = triggerEvents([
     {
-      type: 'EMIT_FORWARD_HTTP_REQUEST',
-      key: 'flashGreen'
+      type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+        write: { command: 'displayTemp', duration: 2, animName: 'Medium Blue Pulse' }
+      }
     },
     {
       type: 'EMIT_SEND_UNIFIED_COMMAND',
@@ -42,7 +44,11 @@ const MusicOperations = props => {
   ]);
 
   const triggerMuteEvents = triggerEvents([
-    { type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashRed' },
+    {
+      type: 'EMIT_FORWARD_HTTP_REQUEST', key: 'flashNano', body: {
+        write: { command: 'displayTemp', duration: 2, animName: 'Fast Red Pulse' }
+      }
+    },
     { type: 'EMIT_TRIGGER_PHOTON_FUNCTION', key: 'secretary', name: target, argument: 'mute' }
   ]);
 
@@ -68,7 +74,7 @@ const MusicOperations = props => {
           label='Home Theater Speaker Control'
           className={useHTSpeakers ? 'switch-active' : 'switch-inactive'}
           checked={useHTSpeakers}
-          onChange={toggleHTSpeakers}/>
+          onChange={toggleHTSpeakers} />
       </div>
     </section>
   );
