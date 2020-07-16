@@ -33,16 +33,16 @@ const MainOperations = (props) => {
   };
 
   const triggerKILightEvents = triggerEvents([
-    { type: 'EMIT_SEND_HUE_COMMAND', id: 1, func: 'toggle' }
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 3, func: 'toggle' }
   ]);
 
   const triggerDRLightEvents = triggerEvents([
-    { type: 'EMIT_SEND_HUE_COMMAND', id: 4, func: 'toggle' }
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 2, func: 'toggle' }
   ]);
 
   const triggerLRLightEvents = triggerEvents([
-    { type: 'EMIT_SEND_HUE_COMMAND', id: 3, func: 'toggle' },
-    { type: 'EMIT_SEND_HUE_COMMAND', id: 2, func: 'toggle' }
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 1, func: 'toggle' },
+    { type: 'EMIT_SEND_HUE_COMMAND', id: 3, func: 'toggle' }
   ]);
 
   return (
