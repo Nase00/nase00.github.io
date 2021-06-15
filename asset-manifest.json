@@ -1,4 +1,5 @@
 {
   "main.js": "/bundle.js",
-  "index.html": "/index.html"
+  "index.html": "/index.html",
+  "me.jpg": "/me.jpg"
 }
